@@ -1,11 +1,12 @@
 import React from "react";
 import AppRouter from "./router/AppRouter";
+import AuthProvider from "./context/auth/AuthContext";
 
 const ChatApp = () => {
   return (
-    <div>
+    <AuthProvider>
       <AppRouter />
-    </div>
+    </AuthProvider>
   );
 };
 
