@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Login = () => {
@@ -7,6 +7,17 @@ const Login = () => {
     password: "",
     rememberme: false,
   });
+
+  useEffect(() => {
+    const remembermeEmail = localStorage.getItem("email");
+    if (remembermeEmail) {
+      setForm({
+        ...form,
+        rememberme: true,
+        email: remembermeEmail,
+      });
+    }
+  }, []);
 
   const onChange = ({ target: { name, value } }) => {
     setForm({
@@ -24,6 +35,11 @@ const Login = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    if (form.rememberme) {
+      localStorage.setItem("email", form.email);
+    } else {
+      localStorage.removeItem("email");
+    }
   };
 
   return (
