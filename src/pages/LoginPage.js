@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/auth/AuthContext";
 
 const Login = () => {
+  const { login } = useContext(AuthContext);
+
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -40,6 +43,8 @@ const Login = () => {
     } else {
       localStorage.removeItem("email");
     }
+    const { email, password } = form;
+    login(email, password);
   };
 
   return (
