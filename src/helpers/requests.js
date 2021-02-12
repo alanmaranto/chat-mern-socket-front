@@ -1,6 +1,6 @@
 const host = process.env.REACT_APP_API_URL;
 
-export const fetchNoToken = async (endpoint, data, method) => {
+export const requestWithoutToken = async (endpoint, data, method) => {
   const url = `${host}/${endpoint}`;
 
   if (method === "GET") {

@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useState } from "react";
-import { fetchNoToken } from "../../helpers/fetch";
+import { requestWithoutToken } from "../../helpers/requests";
 
 export const AuthContext = createContext();
 
@@ -15,7 +15,11 @@ const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(initialState);
 
   const login = async (email, password) => {
-    const response = await fetchNoToken("login", { email, password }, "POST");
+    const response = await requestWithoutToken(
+      "login",
+      { email, password },
+      "POST"
+    );
     console.log(response);
     if (response.ok) {
       localStorage.setItem("token", response.token);
