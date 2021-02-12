@@ -20,7 +20,6 @@ const AuthProvider = ({ children }) => {
       { email, password },
       "POST"
     );
-    console.log(response);
     if (response.ok) {
       localStorage.setItem("token", response.token);
 
@@ -37,7 +36,27 @@ const AuthProvider = ({ children }) => {
     return response.ok;
   };
 
-  const register = (name, email, password) => {};
+  const register = async (name, email, password) => {
+    const response = await requestWithoutToken(
+      "login/new",
+      { name, email, password },
+      "POST"
+    );
+    if (response.ok) {
+      localStorage.setItem("token", response.token);
+
+      const { user } = response;
+      setAuth({
+        uid: user.uid,
+        checking: false,
+        logged: true,
+        name: user.name,
+        email: user.email,
+      });
+      return true;
+    }
+    return response.msg;
+  };
 
   const verifyToken = useCallback(async () => {}, []);
 
