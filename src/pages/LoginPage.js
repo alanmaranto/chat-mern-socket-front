@@ -14,11 +14,11 @@ const Login = () => {
   useEffect(() => {
     const remembermeEmail = localStorage.getItem("email");
     if (remembermeEmail) {
-      setForm({
+      setForm((form) => ({
         ...form,
         rememberme: true,
         email: remembermeEmail,
-      });
+      }));
     }
   }, []);
 
