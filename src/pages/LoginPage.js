@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+import SweetAlert from "sweetalert2";
 import { AuthContext } from "../context/auth/AuthContext";
 
 const Login = () => {
@@ -36,7 +37,7 @@ const Login = () => {
     });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     if (form.rememberme) {
       localStorage.setItem("email", form.email);
@@ -44,7 +45,10 @@ const Login = () => {
       localStorage.removeItem("email");
     }
     const { email, password } = form;
-    login(email, password);
+    const isValid = await login(email, password);
+    if (!isValid) {
+      SweetAlert.fire("Error", "Verifique que sus credenciales sean correctas");
+    }
   };
 
   return (
