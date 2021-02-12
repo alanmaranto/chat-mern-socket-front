@@ -47,7 +47,11 @@ const Login = () => {
     const { email, password } = form;
     const isValid = await login(email, password);
     if (!isValid) {
-      SweetAlert.fire("Error", "Verifique que sus credenciales sean correctas");
+      SweetAlert.fire(
+        "Error",
+        "Verifique que sus credenciales sean correctas",
+        "error"
+      );
     }
   };
 
