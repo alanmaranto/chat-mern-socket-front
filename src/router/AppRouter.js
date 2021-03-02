@@ -8,9 +8,13 @@ import {
 import { AuthContext } from "../context/auth/AuthContext";
 import ChatPage from "../pages/ChatPage";
 import AuthRouter from "./AuthRouter";
+import PrivateRoute from "./PrivateRoute";
+import PublicRoute from "./PublicRoute";
 
 const AppRouter = () => {
   const { auth, verifyToken } = useContext(AuthContext);
+
+  console.log(auth);
 
   useEffect(() => {
     verifyToken();
@@ -24,8 +28,18 @@ const AppRouter = () => {
     <Router>
       <div>
         <Switch>
-          <Route path="/auth" component={AuthRouter} />
-          <Route exact path="/" component={ChatPage} />
+          <PublicRoute
+            isAuthenticated={auth.logged}
+            path="/auth"
+            component={AuthRouter}
+          />
+          <PrivateRoute
+            isAuthenticated={auth.logged}
+            Route
+            exact
+            path="/"
+            component={ChatPage}
+          />
           <Redirect to="/" />
         </Switch>
       </div>
