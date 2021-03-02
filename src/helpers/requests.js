@@ -17,3 +17,27 @@ export const requestWithoutToken = async (endpoint, data, method) => {
     return await response.json();
   }
 };
+
+export const requestWithToken = async (endpoint, data, method) => {
+  const url = `${host}/${endpoint}`;
+  const token = localStorage.getItem("token") || "";
+
+  if (method === "GET") {
+    const response = await fetch(url, {
+      headers: {
+        "x-token": token,
+      },
+    });
+    return await response.json();
+  } else {
+    const response = await fetch(url, {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+        "x-token": token,
+      },
+      body: JSON.stringify(data),
+    });
+    return await response.json();
+  }
+};

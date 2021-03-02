@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useState } from "react";
-import { requestWithoutToken } from "../../helpers/requests";
+import { requestWithoutToken, requestWithToken } from "../../helpers/requests";
 
 export const AuthContext = createContext();
 
@@ -58,7 +58,45 @@ const AuthProvider = ({ children }) => {
     return response.msg;
   };
 
-  const verifyToken = useCallback(async () => {}, []);
+  const verifyToken = useCallback(async () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      setAuth({
+        uid: null,
+        checking: false,
+        logged: false,
+        name: null,
+        email: null,
+      });
+      return false;
+    }
+
+    const response = await requestWithToken("login/renew");
+
+    if (response.ok) {
+      localStorage.setItem("token", response.token);
+
+      const { user } = response;
+      setAuth({
+        uid: user.uid,
+        checking: false,
+        logged: true,
+        name: user.name,
+        email: user.email,
+      });
+      return true;
+    } else {
+      setAuth({
+        uid: null,
+        checking: false,
+        logged: false,
+        name: null,
+        email: null,
+      });
+      return false;
+    }
+  }, []);
 
   const logout = () => {};
 
