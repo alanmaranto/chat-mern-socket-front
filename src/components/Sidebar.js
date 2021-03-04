@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import SidebarChatItem from "./SidebarChatItem";
+import { ChatContext } from "../context/chat/ChatContext";
+import { AuthContext } from "../context/auth/AuthContext";
 
 const Sidebar = () => {
-  const chats = [1, 2, 3, 4];
+  const { chatState } = useContext(ChatContext);
+  const { auth } = useContext(AuthContext);
+
+  const { users } = chatState;
+  const { uid } = auth
+
   return (
     <div className="inbox_chat">
-      {chats.map((chat) => (
-        <SidebarChatItem key={chat} />
+      {users.filter((user) => user.uid !== uid).map((user) => (
+        <SidebarChatItem key={user.uid} user={user} />
       ))}
       {/*                     <!-- conversación inactiva inicio -->
        */}{" "}
@@ -20,7 +27,7 @@ const Sidebar = () => {
           </div>
           <div className="chat_ib">
             <h5>
-              Sunil Rajput <span class="chat_date">Dec 25</span>
+              Sunil Rajput <span className="chat_date">Dec 25</span>
             </h5>
             <p>
               Test, which is a new approach to have all solutions astrology

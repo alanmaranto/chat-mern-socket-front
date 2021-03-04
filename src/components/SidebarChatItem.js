@@ -1,9 +1,9 @@
 import React from "react";
 
-const SidebarChatItem = () => {
+const SidebarChatItem = ({ user }) => {
   return (
     <div className="chat_list active_chat">
-        {/* activechat */}
+      {/* activechat */}
       <div className="chat_people">
         <div className="chat_img">
           <img
@@ -12,9 +12,12 @@ const SidebarChatItem = () => {
           />
         </div>
         <div className="chat_ib">
-          <h5>Some random name</h5>
-          <span className="text-success">Online</span>
-          <span className="text-danger">Offline</span>
+          <h5>{user.name}</h5>
+          {user.online ? (
+            <span className="text-success">Online</span>
+          ) : (
+            <span className="text-danger">Offline</span>
+          )}
         </div>
       </div>
     </div>
