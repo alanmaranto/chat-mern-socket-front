@@ -1,15 +1,22 @@
 import React, { useContext } from "react";
 import { ChatContext } from "../context/chat/ChatContext";
+import { requestWithToken } from "../helpers/requests";
 import chatTypes from "../types/chat/chat";
 
 const SidebarChatItem = ({ user }) => {
   const { chatState, dispatch } = useContext(ChatContext);
   const { activeChat } = chatState;
 
-  const onClick = () => {
+  const onClick = async () => {
     dispatch({
       type: chatTypes.ACTIVE_CHAT,
       payload: user.uid,
+    });
+
+    const response = await requestWithToken(`messages/${user.uid}`);
+    dispatch({
+      type: chatTypes.LOAD_MESSAGES,
+      payload: response.messages,
     });
   };
 
