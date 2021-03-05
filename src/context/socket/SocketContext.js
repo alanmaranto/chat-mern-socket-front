@@ -36,6 +36,15 @@ export const SocketProvider = ({ children }) => {
     });
   }, [socket, dispatch]);
 
+  // Get private message by uid
+  useEffect(() => {
+    socket?.on("private-message", (msg) => {
+      console.log(msg);
+      // Dispatch action to the view
+      // Scroll to top
+    });
+  }, [socket]);
+
   return (
     <SocketContext.Provider value={{ socket, online }}>
       {children}
