@@ -40,10 +40,13 @@ export const SocketProvider = ({ children }) => {
   useEffect(() => {
     socket?.on("private-message", (msg) => {
       console.log(msg);
-      // Dispatch action to the view
+      dispatch({
+        type: chatTypes.NEW_MESSAGE,
+        payload: msg
+      })
       // Scroll to top
     });
-  }, [socket]);
+  }, [socket, dispatch]);
 
   return (
     <SocketContext.Provider value={{ socket, online }}>
