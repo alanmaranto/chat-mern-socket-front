@@ -13,7 +13,7 @@ const Messages = () => {
     <div className="mesgs">
       {/*                 <!-- Historia inicio -->
        */}{" "}
-      <div className="msg_history">
+      <div className="msg_history" id="messages">
         {chatState.messages.map((msg) =>
           msg.to === auth.uid ? (
             <IncomingMessage key={msg._id} msg={msg} />

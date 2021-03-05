@@ -4,6 +4,7 @@ import { useSocket } from "../../hooks/socket/useSocket";
 import { AuthContext } from "../../context/auth/AuthContext";
 import { ChatContext } from "../../context/chat/ChatContext";
 import chatTypes from "../../types/chat/chat";
+import { scrollToBottom } from "../../helpers/scroll";
 
 export const SocketContext = createContext();
 
@@ -42,9 +43,10 @@ export const SocketProvider = ({ children }) => {
       console.log(msg);
       dispatch({
         type: chatTypes.NEW_MESSAGE,
-        payload: msg
-      })
+        payload: msg,
+      });
       // Scroll to top
+      scrollToBottom("messages", 250);
     });
   }, [socket, dispatch]);
 

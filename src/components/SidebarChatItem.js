@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { ChatContext } from "../context/chat/ChatContext";
 import { requestWithToken } from "../helpers/requests";
+import { scrollToBottom } from "../helpers/scroll";
 import chatTypes from "../types/chat/chat";
 
 const SidebarChatItem = ({ user }) => {
@@ -18,6 +19,8 @@ const SidebarChatItem = ({ user }) => {
       type: chatTypes.LOAD_MESSAGES,
       payload: response.messages,
     });
+
+    scrollToBottom('messages')
   };
 
   return (
