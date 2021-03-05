@@ -4,6 +4,10 @@ import AuthProvider from "./context/auth/AuthContext";
 import ChatProvider from "./context/chat/ChatContext";
 import { SocketProvider } from "./context/socket/SocketContext";
 
+import moment from "moment";
+import "moment/locale/es";
+moment.locale("es");
+
 const ChatApp = () => {
   return (
     <ChatProvider>
